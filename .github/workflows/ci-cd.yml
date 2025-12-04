@@ -51,7 +51,7 @@ jobs:
   deploy-simulation:
     needs: [build-auth, build-resource, build-frontend]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/develop'
     steps:
       - name: Simulate Deployment
         run: echo "Desplegando versión ${{ github.sha }} a producción..."
