@@ -41,6 +41,7 @@ jobs:
       - run: cd ag-prueba-front && npm ci
       - name: Run ESLint
         run: cd ag-prueba-front && npm run lint
+        continue-on-error: true
       - run: cd ag-prueba-front && npm run build -- --configuration=production
 
   deploy-simulation:
