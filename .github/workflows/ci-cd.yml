@@ -46,6 +46,13 @@ jobs:
           ignore-unfixed: true
           severity: "CRITICAL,HIGH"
 
+      - name: Upload Binaries (Auth Server)
+        uses: actions/upload-artifact@v4
+        with:
+          name: auth-server-jar
+          path: authorization-server/target/*.jar
+          retention-days: 5
+
   build-resource:
     runs-on: ubuntu-latest
     steps:
@@ -95,6 +102,13 @@ jobs:
         with:
           name: sbom-frontend
           path: frontend-sbom.spdx.json
+
+      - name: Upload Binaries (Frontend)
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: ag-prueba-front/dist/
+          retention-days: 5
 
   deploy-simulation:
     needs: [build-auth, build-resource, build-frontend]
