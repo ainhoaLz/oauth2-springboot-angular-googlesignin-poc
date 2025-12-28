@@ -36,6 +36,16 @@ jobs:
           name: sbom-auth-server
           path: authorization-server-sbom.spdx.json
 
+      - name: Run Trivy Vulnerability Scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          scan-ref: "authorization-server"
+          format: "table"
+          exit-code: "0"
+          ignore-unfixed: true
+          severity: "CRITICAL,HIGH"
+
   build-resource:
     runs-on: ubuntu-latest
     steps:
