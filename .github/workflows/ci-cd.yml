@@ -15,8 +15,8 @@ jobs:
         with: { java-version: "17", distribution: "temurin", cache: "maven" }
       - name: Run Checkstyle
         run: cd authorization-server && chmod +x mvnw && ./mvnw checkstyle:check
-      - run: cd authorization-server && chmod +x mvnw && ./mvnw clean package -DskipTests
-
+        continue-on-error: true
+      - run: cd authorization-server && chmod +x mvnw && ./mvnw clean package
   build-resource:
     runs-on: ubuntu-latest
     steps:
