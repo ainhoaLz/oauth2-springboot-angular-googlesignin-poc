@@ -22,6 +22,20 @@ jobs:
         run: cd authorization-server && chmod +x mvnw && ./mvnw checkstyle:check
         continue-on-error: true
       - run: cd authorization-server && chmod +x mvnw && ./mvnw clean package
+
+      - name: Generate SBOM (Auth Server)
+        uses: anchore/sbom-action@v0
+        with:
+          path: authorization-server
+          format: spdx-json
+          output-file: authorization-server-sbom.spdx.json
+
+      - name: Upload SBOM Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-auth-server
+          path: authorization-server-sbom.spdx.json
+
   build-resource:
     runs-on: ubuntu-latest
     steps:
@@ -58,6 +72,19 @@ jobs:
         run: cd ag-prueba-front && npm run lint
         continue-on-error: true
       - run: cd ag-prueba-front && npm run build -- --configuration=production
+
+      - name: Generate SBOM (Frontend)
+        uses: anchore/sbom-action@v0
+        with:
+          path: ag-prueba-front
+          format: spdx-json
+          output-file: frontend-sbom.spdx.json
+
+      - name: Upload SBOM Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-frontend
+          path: frontend-sbom.spdx.json
 
   deploy-simulation:
     needs: [build-auth, build-resource, build-frontend]
