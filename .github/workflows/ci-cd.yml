@@ -115,4 +115,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'
     steps:
-      - run: echo "Desplegando versión ${{ github.sha }} a producción..."
+      - name: Simulate Deployment with Secrets
+        env:
+          DB_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+        run: |
+          echo "Desplegando versión ${{ github.sha }}..."
+          echo "Inyectando secretos de forma segura..."
